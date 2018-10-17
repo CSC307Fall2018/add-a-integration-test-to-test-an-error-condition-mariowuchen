@@ -23,6 +23,12 @@ describe('/todos', () => {
           return expect(response.body.todos).toEqual([]);
         });
     });
+    
+    it('should return 404', () => {
+      return request(app)
+        .get(rootPath + ":nothing")
+         return expect(404);
+    });
 
     it('should return 1 item in the array', () => {
       return ToDo.create({
@@ -46,6 +52,17 @@ describe('/todos', () => {
         .then((response) => {
           return expect(response.body.subject).toEqual('test');
         });
+    });
+  });
+
+  describe('delete /', () => {
+    it('should delete todo', () => {
+      return ToDo.create({
+      }).then((result) => {
+        return request(app).delete(rootPath + '/' + result.id).expect((response) => {
+          return expect(response.body.delete).toEqual(true);
+        });
+      });
     });
   });
 });
